@@ -9,7 +9,7 @@ import { View, SafeAreaView, FlatList, KeyboardAvoidingView, TextInput, StyleShe
 const App = () => {
   const [count, setCount] = React.useState(0)
   const [user, setUser] = React.useState([])
-  // console.log('di luar useEffect', user)
+  // console.log(user)
 
   const incby5 = () => {
     for(i = 0; i < 5; i++) {
@@ -19,13 +19,16 @@ const App = () => {
 
   React.useEffect(() => {
     console.log('useEffect trigered')
+  }, [user, count])
+
+  const getData = () => {
     Axios.get('https://jsonplaceholder.typicode.com/users')
     .then(res => {
-      console.log(res.data)
+      // console.log(res.data)
       setUser(res.data)
     })
     .catch(err => console.log(err))
-  }, [])
+  }
 
   return (
     <View style={styles.container}>
@@ -34,6 +37,7 @@ const App = () => {
         <Button title="Decrement" onPress={() => setCount(count - 1)}/>
         <Button title="Increment" onPress={() => setCount(count + 1)}/>
         <Button title="Increment by 5" onPress={incby5}/>
+        <Button title="Fetching Data" onPress={getData}/>
       </View>
       <Text>you have clicked {count} times</Text>
     </View>
