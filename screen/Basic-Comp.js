@@ -3,7 +3,7 @@ import {
   View, Text, Image, TextInput, ScrollView, StyleSheet, Button, Alert
 } from 'react-native';
 
-const App = () => {
+const BasicComp = () => {
   const [valueInput, setValueInput] = React.useState('Default value')
   console.log(valueInput)
   return (
@@ -58,4 +58,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default App;
+export default BasicComp;

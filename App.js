@@ -1,69 +1,57 @@
 import React from 'react';
-import {
-  View, Text, Image, TextInput, ScrollView, StyleSheet, Button, Alert
-} from 'react-native';
+import Axios from 'axios'
+import { View, SafeAreaView, FlatList, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, TouchableWithoutFeedback, Button, Keyboard } from 'react-native'
+
+// import screen
+// import FormData from './screen/FormData-Hook'
+// import BasicComp from './screen/Basic-Comp'
 
 const App = () => {
-  const [user, setUser] = React.useState(["", "", "", "", ""])
-  const [data, setData] = React.useState({
-    firstName: "Input your first name",
-    lastName: "Input your last name",
-    gender: "Input your gender",
-    age: "Input your age",
-    hobby: "Input your hobby"
-  })
-  // console.log(data)
+  const [count, setCount] = React.useState(0)
+  const [user, setUser] = React.useState([])
+  // console.log('di luar useEffect', user)
 
-  const submit = () => {
-    const newArr = [data.firstName, data.lastName, data.gender, data.age, data.hobby]
-    setUser(newArr)
-    setData({
-      firstName: "Input your first name",
-      lastName: "Input your last name",
-      gender: "Input your gender",
-      age: "Input your age",
-      hobby: "Input your hobby"
-    })
+  const incby5 = () => {
+    for(i = 0; i < 5; i++) {
+      setCount(prev => prev + 1)
+    }
   }
 
-  return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.title}>Form Data</Text>
-      <TextInput style={styles.input} value={data.firstName} onChangeText={value => setData({...data, firstName: value}) }/>
-      <TextInput style={styles.input} value={data.lastName} onChangeText={value => setData({...data, lastName: value}) }/>
-      <TextInput style={styles.input} value={data.gender} onChangeText={value => setData({...data, gender: value}) }/>
-      <TextInput style={styles.input} value={data.age} onChangeText={value => setData({...data, age: value}) }/>
-      <TextInput style={{...styles.input, marginBottom: 20}} value={data.hobby} onChangeText={value => setData({...data, hobby: value}) }/>
-      <Button title="Submit" onPress={submit}/>
+  React.useEffect(() => {
+    console.log('useEffect trigered')
+    Axios.get('https://jsonplaceholder.typicode.com/users')
+    .then(res => {
+      console.log(res.data)
+      setUser(res.data)
+    })
+    .catch(err => console.log(err))
+  }, [])
 
-      <View style={{marginTop: 30}}>
-        <Text style={styles.title}>Result</Text>
-        <Text>First Name: {user[0]}</Text>
-        <Text>Last Name: {user[1]}</Text>
-        <Text>Gender: {user[2]}</Text>
-        <Text>Age: {user[3]}</Text>
-        <Text>Hobby: {user[4]}</Text>
+  return (
+    <View style={styles.container}>
+      <Text style={styles.number}>{count}</Text>
+      <View style={styles.buttonView}>
+        <Button title="Decrement" onPress={() => setCount(count - 1)}/>
+        <Button title="Increment" onPress={() => setCount(count + 1)}/>
+        <Button title="Increment by 5" onPress={incby5}/>
       </View>
-    </ScrollView>
+      <Text>you have clicked {count} times</Text>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  number: {
+    fontSize: 100,
+    textAlign: 'center'
+  },
+  buttonView: {
+    height: 150,
+    // backgroundColor: "salmon",
+    justifyContent: 'space-around'
+  },
   container: {
-    height: '100%',
-    padding: 20,
-    // backgroundColor: 'yellow'
-  },
-  title: {
-    textAlign: 'center',
-    fontSize: 30
-  },
-  input: {
-    height: 50,
-    borderWidth: 1,
-    borderColor: 'black',
-    marginVertical: 5,
-    borderRadius: 10
+    padding: 15
   }
 })
 
