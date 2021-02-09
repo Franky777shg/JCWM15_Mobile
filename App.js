@@ -4,27 +4,46 @@ import {
 } from 'react-native';
 
 const App = () => {
-  const [valueInput, setValueInput] = React.useState('Default value')
-  console.log(valueInput)
+  const [user, setUser] = React.useState(["", "", "", "", ""])
+  const [data, setData] = React.useState({
+    firstName: "Input your first name",
+    lastName: "Input your last name",
+    gender: "Input your gender",
+    age: "Input your age",
+    hobby: "Input your hobby"
+  })
+  // console.log(data)
+
+  const submit = () => {
+    const newArr = [data.firstName, data.lastName, data.gender, data.age, data.hobby]
+    setUser(newArr)
+    setData({
+      firstName: "Input your first name",
+      lastName: "Input your last name",
+      gender: "Input your gender",
+      age: "Input your age",
+      hobby: "Input your hobby"
+    })
+  }
+
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.red} />
-      <View style={styles.blue} />
-      <Text>Hello World</Text>
-      <Image
-        style={styles.image}
-        source={{
-          uri: 'https://upload.wikimedia.org/wikipedia/commons/1/18/React_Native_Logo.png'
-        }}
-      />
-      <TextInput
-        style={styles.textInput}
-        onChangeText={e => setValueInput(e)}
-        value={valueInput}
-      />
-      <Button style={styles.button} title="Test" onPress={() => console.log('trigered')} />
+      <Text style={styles.title}>Form Data</Text>
+      <TextInput style={styles.input} value={data.firstName} onChangeText={value => setData({...data, firstName: value}) }/>
+      <TextInput style={styles.input} value={data.lastName} onChangeText={value => setData({...data, lastName: value}) }/>
+      <TextInput style={styles.input} value={data.gender} onChangeText={value => setData({...data, gender: value}) }/>
+      <TextInput style={styles.input} value={data.age} onChangeText={value => setData({...data, age: value}) }/>
+      <TextInput style={{...styles.input, marginBottom: 20}} value={data.hobby} onChangeText={value => setData({...data, hobby: value}) }/>
+      <Button title="Submit" onPress={submit}/>
 
-      <Button title="Show Alert" onPress={() => Alert.alert('Tombol alert di tekan')} />
+      <View style={{marginTop: 30}}>
+        <Text style={styles.title}>Result</Text>
+        <Text>First Name: {user[0]}</Text>
+        <Text>Last Name: {user[1]}</Text>
+        <Text>Gender: {user[2]}</Text>
+        <Text>Age: {user[3]}</Text>
+        <Text>Hobby: {user[4]}</Text>
+      </View>
     </ScrollView>
   )
 }
@@ -33,28 +52,18 @@ const styles = StyleSheet.create({
   container: {
     height: '100%',
     padding: 20,
-    backgroundColor: 'yellow'
+    // backgroundColor: 'yellow'
   },
-  blue: {
-    backgroundColor: "blue",
-    height: 50
+  title: {
+    textAlign: 'center',
+    fontSize: 30
   },
-  red: {
-    backgroundColor: "red",
-    height: 50
-  },
-  image: {
-    width: 50,
-    height: 50
-  },
-  textInput: {
+  input: {
     height: 50,
-    borderColor: 'gray',
     borderWidth: 1,
-    marginVertical: 10
-  },
-  button: {
-    marginVertical: 10,
+    borderColor: 'black',
+    marginVertical: 5,
+    borderRadius: 10
   }
 })
 
