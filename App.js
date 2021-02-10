@@ -1,62 +1,72 @@
 import React from 'react';
-import Axios from 'axios'
-import { View, SafeAreaView, FlatList, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, TouchableWithoutFeedback, Button, Keyboard } from 'react-native'
+import { FlatList, SafeAreaView, Text, View, Button } from 'react-native';
+import { Input, Icon, ListItem, Overlay } from 'react-native-elements';
 
-// import screen
-// import FormData from './screen/FormData-Hook'
-// import BasicComp from './screen/Basic-Comp'
+// import styles
+import styles from './style/todolist'
 
 const App = () => {
-  const [count, setCount] = React.useState(0)
-  const [user, setUser] = React.useState([])
-  // console.log(user)
+  const [input, setInput] = React.useState("")
+  const [data, setData] = React.useState([
+    "Ibadah",
+    "Mandi",
+    "Sarapan"
+  ])
+  const [idDel, setIdDel] = React.useState(null)
+  const [confDel, setConfDel] = React.useState(false)
 
-  const incby5 = () => {
-    for(i = 0; i < 5; i++) {
-      setCount(prev => prev + 1)
-    }
+  const addHandle = () => {
+    setData(prev => [...prev, input])
   }
 
-  React.useEffect(() => {
-    console.log('useEffect trigered')
-  }, [user, count])
-
-  const getData = () => {
-    Axios.get('https://jsonplaceholder.typicode.com/users')
-    .then(res => {
-      // console.log(res.data)
-      setUser(res.data)
-    })
-    .catch(err => console.log(err))
+  const delHandle = () => {
+    // console.log(idDel)
+    let tempData = [...data]
+    tempData.splice(idDel, 1)
+    setData(tempData)
+    setConfDel(false)
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.number}>{count}</Text>
-      <View style={styles.buttonView}>
-        <Button title="Decrement" onPress={() => setCount(count - 1)}/>
-        <Button title="Increment" onPress={() => setCount(count + 1)}/>
-        <Button title="Increment by 5" onPress={incby5}/>
-        <Button title="Fetching Data" onPress={getData}/>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>To Do List</Text>
+      <View style={styles.inputContainer}>
+        <Input
+          placeholder='INPUT WITH ICON'
+          leftIcon={{ type: 'font-awesome', name: 'chevron-right' }}
+          onChangeText={text => setInput(text)}
+        />
+        <Icon
+          reverse
+          name='plus'
+          type='font-awesome'
+          color='#517fa4'
+          onPress={addHandle}
+        />
+
       </View>
-      <Text>you have clicked {count} times</Text>
-    </View>
+      <View style={styles.listContainer}>
+        <FlatList
+          data={data}
+          renderItem={({ item, index }) => (
+            <ListItem containerStyle={styles.listItem} onPress={() => { setConfDel(true), setIdDel(index) }}>
+              <ListItem.Title>{item}</ListItem.Title>
+            </ListItem>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </View>
+      <Overlay isVisible={confDel} onBackdropPress={() => setConfDel(false)} overlayStyle={styles.overlay} >
+        <View style={styles.childOverlay}>
+          <Text style={{ fontSize: 25 }}>Are you sure?</Text>
+          <View style={styles.buttonContainer}>
+            <Button title="Yes" color="green" onPress={delHandle} />
+            <Button title="No" color="red" onPress={() => setConfDel(false)} />
+          </View>
+        </View>
+      </Overlay>
+    </SafeAreaView>
   )
 }
-
-const styles = StyleSheet.create({
-  number: {
-    fontSize: 100,
-    textAlign: 'center'
-  },
-  buttonView: {
-    height: 150,
-    // backgroundColor: "salmon",
-    justifyContent: 'space-around'
-  },
-  container: {
-    padding: 15
-  }
-})
 
 export default App;
