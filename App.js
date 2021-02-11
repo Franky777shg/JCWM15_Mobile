@@ -6,25 +6,37 @@ import { Input, Icon, ListItem, Overlay } from 'react-native-elements';
 import styles from './style/todolist'
 
 const App = () => {
-  const [input, setInput] = React.useState("")
+  const [input, setInput] = React.useState("") // input untuk add
   const [data, setData] = React.useState([
     "Ibadah",
     "Mandi",
     "Sarapan"
-  ])
-  const [idDel, setIdDel] = React.useState(null)
-  const [confDel, setConfDel] = React.useState(false)
+  ]) // data to do list
+  const [idDelEdit, setIdDelEdit] = React.useState(null) // id untuk delete
+  const [confDel, setConfDel] = React.useState(false) // visibilitas dari overlay untuk delete
+  const [confEdit, setConfEdit] = React.useState(false) // visibilitas dari overlay untuk edit
+  const [inputEdit, setInputEdit] = React.useState("") // input untuk edit
 
   const addHandle = () => {
     setData(prev => [...prev, input])
+    setInput("")
   }
 
   const delHandle = () => {
     // console.log(idDel)
     let tempData = [...data]
-    tempData.splice(idDel, 1)
+    tempData.splice(idDelEdit, 1)
     setData(tempData)
     setConfDel(false)
+    setIdDelEdit(null)
+  }
+
+  const editHandle = () => {
+    let tempData = [...data]
+    tempData.splice(idDelEdit, 1, inputEdit)
+    setData(tempData)
+    setConfEdit(false)
+    setIdDelEdit(null)
   }
 
   return (
@@ -32,9 +44,10 @@ const App = () => {
       <Text style={styles.title}>To Do List</Text>
       <View style={styles.inputContainer}>
         <Input
-          placeholder='INPUT WITH ICON'
+          placeholder='Input your activity'
           leftIcon={{ type: 'font-awesome', name: 'chevron-right' }}
           onChangeText={text => setInput(text)}
+          value={input}
         />
         <Icon
           reverse
@@ -49,19 +62,35 @@ const App = () => {
         <FlatList
           data={data}
           renderItem={({ item, index }) => (
-            <ListItem containerStyle={styles.listItem} onPress={() => { setConfDel(true), setIdDel(index) }}>
+            <ListItem
+              containerStyle={styles.listItem}
+              onPress={() => { setConfDel(true), setIdDelEdit(index) }}
+              onLongPress={() => { setConfEdit(true), setIdDelEdit(index) }}
+            >
               <ListItem.Title>{item}</ListItem.Title>
             </ListItem>
           )}
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
-      <Overlay isVisible={confDel} onBackdropPress={() => setConfDel(false)} overlayStyle={styles.overlay} >
+      <Overlay isVisible={confDel} onBackdropPress={() => setConfDel(false)} overlayStyle={styles.overlayDel} >
         <View style={styles.childOverlay}>
-          <Text style={{ fontSize: 25 }}>Are you sure?</Text>
+          <Text style={{ fontSize: 20 }}>Are you sure to delete?</Text>
           <View style={styles.buttonContainer}>
             <Button title="Yes" color="green" onPress={delHandle} />
             <Button title="No" color="red" onPress={() => setConfDel(false)} />
+          </View>
+        </View>
+      </Overlay>
+      <Overlay isVisible={confEdit} onBackdropPress={() => setConfEdit(false)} overlayStyle={styles.overlayEdit}>
+        <View style={styles.childOverlay}>
+          <Input
+            placeholder='Input edit'
+            onChangeText={text => setInputEdit(text)}
+          />
+          <View style={styles.buttonContainer}>
+            <Button title="Yes" color="green" onPress={editHandle} />
+            <Button title="No" color="red" onPress={() => setConfEdit(false)} />
           </View>
         </View>
       </Overlay>

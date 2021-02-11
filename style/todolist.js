@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: '#ccf2f4'
     },
-    overlay: {
+    overlayDel: {
         height: 150,
         width: '90%',
         borderRadius: 10,
@@ -43,6 +43,12 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '80%',
         justifyContent: 'space-around'
+    },
+    overlayEdit: {
+        height: 200,
+        width: '90%',
+        borderRadius: 10,
+        backgroundColor: '#f4f9f9'
     }
 })
 
