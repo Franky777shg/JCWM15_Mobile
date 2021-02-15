@@ -1,8 +1,7 @@
 import React from 'react';
 import { ScrollView, Text, View, Button, TextInput } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import { createStackNavigator } from '@react-navigation/stack'
 
 const Home = ({ navigation, route }) => {
   // console.log(navigation)
@@ -102,38 +101,52 @@ const Post = ({ navigation, route }) => {
   )
 }
 
-const App = () => {
-  const Tab = createBottomTabNavigator()
+const StackNav = () => {
+  const Stack = createStackNavigator()
 
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName
-
-            if (route.name === "Home") {
-              iconName = 'home'
-            } else if (route.name === "Details") {
-              iconName = 'info-circle'
-            } else if (route.name === "Post") {
-              iconName = 'mail-bulk'
-            }
-
-            return <Icon name={iconName} size={size} color={color} />
-          }
-        })}
-        tabBarOptions={{
-          activeTintColor: 'salmon',
-          inactiveTintColor: 'gray'
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: 'salmon',
+          },
+          headerTintColor: "#ffffff"
         }}
       >
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Details" component={Details} />
-        <Tab.Screen name="Post" component={Post} />
-      </Tab.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{
+            headerStyle: {
+              backgroundColor: 'salmon'
+            },
+            // headerTintColor: "#ffffff",
+            headerTitleAlign: 'center',
+            headerRight: () => (
+              <Button
+              title="Login"
+              onPress={() => (console.log('test'))}
+              />
+            )
+          }}
+        />
+        <Stack.Screen
+          name="Details"
+          component={Details}
+          initialParams={{ name: 'initial params' }}
+          options={({ route }) => ({ title: route.params.name })}
+        />
+        <Stack.Screen
+          name="Post"
+          component={Post}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   )
 }
 
-export default App;
+export default StackNav;
+
+// home, details, home
