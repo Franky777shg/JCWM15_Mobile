@@ -19,16 +19,6 @@ const Home = ({ navigation, route }) => {
           })
         }} />
       <Button
-        title="Go to details by push"
-        onPress={() => {
-          navigation.push('Details')
-        }} />
-      <Button
-        title="Go to Home by push"
-        onPress={() => {
-          navigation.push('Home')
-        }} />
-      <Button
         title="Go to Post"
         onPress={() => {
           navigation.navigate('Post')
@@ -52,18 +42,6 @@ const Details = ({ navigation, route }) => {
         title="Go to Home"
         onPress={() => {
           navigation.navigate('Home')
-        }}
-      />
-      <Button
-        title="Go to details again"
-        onPress={() => {
-          navigation.push('Details')
-        }}
-      />
-      <Button
-        title="Go to Home by push"
-        onPress={() => {
-          navigation.push('Home')
         }}
       />
       <Button
@@ -96,6 +74,12 @@ const Post = ({ navigation, route }) => {
             post: input
           })
           setInput("")
+        }}
+      />
+      <Button
+        title="Go to Home"
+        onPress={() => {
+          navigation.navigate('Home')
         }}
       />
     </View>
