@@ -3,7 +3,6 @@ import { ScrollView, Text, View, Button, TextInput } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
-import { createDrawerNavigator } from '@react-navigation/drawer'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const Home = ({ navigation, route }) => {
@@ -23,12 +22,9 @@ const Home = ({ navigation, route }) => {
       <Button
         title="Go to Post"
         onPress={() => {
-          navigation.navigate('Post Screen')
-        }} />
-      <Button
-        title="Open Drawer"
-        onPress={() => {
-          navigation.openDrawer()
+          navigation.navigate('Post Tab', {
+            screen: "Post Screen"
+          })
         }} />
     </View>
   )
@@ -54,7 +50,9 @@ const Details = ({ navigation, route }) => {
       <Button
         title="Post again"
         onPress={() => {
-          navigation.navigate('Post Screen')
+          navigation.navigate('Post Tab', {
+            screen: "Post Screen"
+          })
         }}
       />
     </View>
@@ -105,8 +103,8 @@ const Post = ({ navigation, route }) => {
   )
 }
 
-const TestScreen = ({ navigation }) => {
-  return (
+const TestScreen = ({navigation}) => {
+  return(
     <View>
       <Text>This is Test Screen</Text>
     </View>
@@ -114,15 +112,14 @@ const TestScreen = ({ navigation }) => {
 }
 
 // Create home stack screen
-const HomeDrawerNavigator = () => {
-  const HomeDrawer = createDrawerNavigator()
+const HomeStackNavigator = () => {
+  const HomeStack = createStackNavigator()
 
   return (
-    <HomeDrawer.Navigator>
-      <HomeDrawer.Screen name="Home Screen" component={Home} />
-      <HomeDrawer.Screen name="Details Screen" component={Details} />
-      <HomeDrawer.Screen name="Test Screen" component={TestScreen} />
-    </HomeDrawer.Navigator>
+    <HomeStack.Navigator>
+      <HomeStack.Screen name="Home Screen" component={Home} />
+      <HomeStack.Screen name="Details Screen" component={Details} />
+    </HomeStack.Navigator>
   )
 }
 
@@ -134,13 +131,13 @@ const PostStackNavigator = () => {
     <PostStack.Navigator>
       <PostStack.Screen name="Post Screen" component={Post} />
       <PostStack.Screen name="Details Screen" component={Details} />
+      <PostStack.Screen name="Test Screen" component={TestScreen} />
     </PostStack.Navigator>
   )
 }
 
-const Tab = createBottomTabNavigator()
-
-const App = () => {
+const TabStack = () => {
+  const Tab = createBottomTabNavigator()
 
   return (
     <NavigationContainer>
@@ -163,11 +160,11 @@ const App = () => {
           inactiveTintColor: 'gray'
         }}
       >
-        <Tab.Screen name="Home Tab" component={HomeDrawerNavigator} />
+        <Tab.Screen name="Home Tab" component={HomeStackNavigator} />
         <Tab.Screen name="Post Tab" component={PostStackNavigator} />
       </Tab.Navigator>
     </NavigationContainer>
   )
 }
 
-export default App;
+export default TabStack;
