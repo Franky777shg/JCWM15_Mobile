@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, Text, View, Button, TextInput } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createStackNavigator } from '@react-navigation/stack'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const Home = ({ navigation, route }) => {
@@ -13,7 +14,7 @@ const Home = ({ navigation, route }) => {
       <Button
         title="Go to details"
         onPress={() => {
-          navigation.navigate('Details', {
+          navigation.navigate('Details Screen', {
             name: "Budi",
             id: 2
           })
@@ -21,7 +22,9 @@ const Home = ({ navigation, route }) => {
       <Button
         title="Go to Post"
         onPress={() => {
-          navigation.navigate('Post')
+          navigation.navigate('Post Tab', {
+            screen: "Post Screen"
+          })
         }} />
     </View>
   )
@@ -41,13 +44,15 @@ const Details = ({ navigation, route }) => {
       <Button
         title="Go to Home"
         onPress={() => {
-          navigation.navigate('Home')
+          navigation.navigate('Home Screen')
         }}
       />
       <Button
         title="Post again"
         onPress={() => {
-          navigation.navigate('Post')
+          navigation.navigate('Post Tab', {
+            screen: "Post Screen"
+          })
         }}
       />
     </View>
@@ -70,7 +75,7 @@ const Post = ({ navigation, route }) => {
         title="Post"
         onPress={() => {
           console.log(input)
-          navigation.navigate('Details', {
+          navigation.navigate('Details Screen', {
             post: input
           })
           setInput("")
@@ -79,10 +84,55 @@ const Post = ({ navigation, route }) => {
       <Button
         title="Go to Home"
         onPress={() => {
-          navigation.navigate('Home')
+          navigation.navigate('Home Screen')
+        }}
+      />
+      <Button
+        title="Go to Details"
+        onPress={() => {
+          navigation.navigate('Details Screen')
+        }}
+      />
+      <Button
+        title="Go to Test"
+        onPress={() => {
+          navigation.navigate('Test Screen')
         }}
       />
     </View>
+  )
+}
+
+const TestScreen = ({navigation}) => {
+  return(
+    <View>
+      <Text>This is Test Screen</Text>
+    </View>
+  )
+}
+
+// Create home stack screen
+const HomeStackNavigator = () => {
+  const HomeStack = createStackNavigator()
+
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen name="Home Screen" component={Home} />
+      <HomeStack.Screen name="Details Screen" component={Details} />
+    </HomeStack.Navigator>
+  )
+}
+
+// create post stack screen
+const PostStackNavigator = () => {
+  const PostStack = createStackNavigator()
+
+  return (
+    <PostStack.Navigator>
+      <PostStack.Screen name="Post Screen" component={Post} />
+      <PostStack.Screen name="Details Screen" component={Details} />
+      <PostStack.Screen name="Test Screen" component={TestScreen} />
+    </PostStack.Navigator>
   )
 }
 
@@ -96,12 +146,10 @@ const App = () => {
           tabBarIcon: ({ focused, color, size }) => {
             let iconName
 
-            if (route.name === "Home") {
+            if (route.name === "Home Tab") {
               iconName = 'home'
-            } else if (route.name === "Details") {
+            } else if (route.name === "Post Tab") {
               iconName = 'info-circle'
-            } else if (route.name === "Post") {
-              iconName = 'mail-bulk'
             }
 
             return <Icon name={iconName} size={size} color={color} />
@@ -112,9 +160,8 @@ const App = () => {
           inactiveTintColor: 'gray'
         }}
       >
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Details" component={Details} />
-        <Tab.Screen name="Post" component={Post} />
+        <Tab.Screen name="Home Tab" component={HomeStackNavigator} />
+        <Tab.Screen name="Post Tab" component={PostStackNavigator} />
       </Tab.Navigator>
     </NavigationContainer>
   )
