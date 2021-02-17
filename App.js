@@ -1,4 +1,5 @@
 import React from 'react';
+import Axios from 'axios'
 import { ScrollView, Text, View, Button, TextInput } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -7,6 +8,14 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const Home = ({ navigation, route }) => {
+  const [movies, setMovies] = React.useState([])
+  console.log(movies)
+
+  const getMovies = () => {
+    Axios.get('http://192.168.100.3:2000/movies/get/all')
+      .then(res => setMovies(res.data))
+      .catch(err => console.log(err))
+  }
   // console.log(navigation)
   // console.log(route)
   return (
@@ -30,6 +39,10 @@ const Home = ({ navigation, route }) => {
         onPress={() => {
           navigation.openDrawer()
         }} />
+      <Button
+        title="Get Movies"
+        onPress={getMovies}
+      />
     </View>
   )
 }
