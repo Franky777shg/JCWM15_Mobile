@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView, Text, View, Button, TextInput } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
 // ip = 192.168.100.3
 
 // setup redux
@@ -16,12 +17,15 @@ const globalStore = createStore(
   composeWithDevTools(applyMiddleware(ReduxThunk))
 )
 
+// import navigation
+import MainNavigation from './src/navigation/MainNavigation'
+
 const App = () => {
   return (
     <Provider store={globalStore}>
-      <View>
-        <Text>Hello World</Text>
-      </View>
+      <NavigationContainer>
+        <MainNavigation />
+      </NavigationContainer>
     </Provider>
   )
 }
