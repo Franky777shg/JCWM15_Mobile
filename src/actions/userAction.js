@@ -7,7 +7,7 @@ export const login = (data) => {
             const res = await Axios.post('http://192.168.100.3:2000/user/login', data)
             console.log(res.data)
 
-            asyncStorage.setItem('token', res.data.token)
+            await asyncStorage.setItem('token', res.data.token)
 
             dispatch({
                 type: "LOGIN",
@@ -23,11 +23,14 @@ export const login = (data) => {
 export const keepLogin = () => {
     return async (dispatch) => {
         try {
-            const token = asyncStorage.getItem('token')
+            console.log('keep login terpanggil')
+            const token = await asyncStorage.getItem('token')
 
             if(!token) return
+            console.log('ada token')
 
             const res = await Axios.post('http://192.168.100.3:2000/user/keeplogin', { token })
+            console.log(res.data)
 
             dispatch({
                 type: "LOGIN",
