@@ -13,6 +13,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
                 username: action.payload.username,
                 email: action.payload.email
             }
+        case 'LOGOUT':
+            return INITIAL_STATE
         default:
             return state
     }

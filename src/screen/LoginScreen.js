@@ -31,7 +31,7 @@ const LoginScreen = ({ navigation }) => {
     }
 
     React.useEffect(() => {
-        if(id) return navigation.navigate('Home')
+        if (id) return navigation.navigate('Home')
     }, [id])
 
     return (
@@ -50,8 +50,15 @@ const LoginScreen = ({ navigation }) => {
                 style={styles.input}
             />
             <Button
+                buttonStyle={{...styles.button, marginBottom: 10}}
                 title="Login"
                 onPress={handleLogin}
+            />
+            <Text>Sudah punya akun?</Text>
+            <Button
+                buttonStyle={styles.button}
+                title="Register"
+                onPress={() => navigation.navigate('Register')}
             />
         </View>
     )
@@ -69,6 +76,9 @@ const styles = StyleSheet.create({
     },
     input: {
         marginVertical: 15
+    },
+    button: {
+        marginVertical: 5
     }
 })
 

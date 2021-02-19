@@ -26,7 +26,7 @@ export const keepLogin = () => {
             console.log('keep login terpanggil')
             const token = await asyncStorage.getItem('token')
 
-            if(!token) return
+            if (!token) return
             console.log('ada token')
 
             const res = await Axios.post('http://192.168.100.3:2000/user/keeplogin', { token })
@@ -42,3 +42,19 @@ export const keepLogin = () => {
         }
     }
 }
+
+export const logout = () => {
+    return async (dispatch) => {
+        try {
+            await asyncStorage.removeItem('token')
+            
+            dispatch({
+                type: 'LOGOUT'
+            })
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+}
+
