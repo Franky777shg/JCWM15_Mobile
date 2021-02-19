@@ -20,6 +20,25 @@ export const login = (data) => {
     }
 }
 
+export const register = (data) => {
+    return async (dispatch) => {
+        try {
+            const res = await Axios.post('http://192.168.100.3:2000/user/register', data)
+            console.log(res.data)
+
+            await asyncStorage.setItem('token', res.data.token)
+
+            dispatch({
+                type: 'LOGIN',
+                payload: res.data
+            })
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+}
+
 export const keepLogin = () => {
     return async (dispatch) => {
         try {
@@ -47,7 +66,7 @@ export const logout = () => {
     return async (dispatch) => {
         try {
             await asyncStorage.removeItem('token')
-            
+
             dispatch({
                 type: 'LOGOUT'
             })

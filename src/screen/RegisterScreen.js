@@ -4,32 +4,49 @@ import {
     Input,
     Button
 } from 'react-native-elements'
+import { useDispatch } from 'react-redux'
+
+// import actions
+import { register } from '../actions'
 
 const RegisterScreen = ({ navigation }) => {
+    const [username, setUsername] = React.useState("")
+    const [password, setPassword] = React.useState("")
+    const [email, setEmail] = React.useState("")
+
+    const dispatch = useDispatch()
+
+    const handleRegister = () => {
+        const user = {username, password, email}
+        console.log(user)
+
+        dispatch(register(user))
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Register</Text>
             <Input
                 placeholder="Username"
                 leftIcon={{ type: 'font-awesome', name: 'user' }}
-                // onChangeText={setUsername}
+                onChangeText={setUsername}
                 style={styles.input}
             />
             <Input
                 placeholder="Password"
                 leftIcon={{ type: 'font-awesome', name: 'lock' }}
-                // onChangeText={setPassword}
+                onChangeText={setPassword}
                 style={styles.input}
             />
             <Input
                 placeholder="Email"
                 leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-                // onChangeText={setPassword}
+                onChangeText={setEmail}
                 style={styles.input}
             />
             <Button
                 title="Register"
-                onPress={() => console.log('')}
+                onPress={handleRegister}
             />
             <Button
                 title="Login"
