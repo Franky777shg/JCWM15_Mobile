@@ -4,8 +4,10 @@ import Axios from 'axios'
 export const login = (data) => {
     return async (dispatch) => {
         try {
+            console.log('before axios')
             const res = await Axios.post('http://192.168.100.3:2000/user/login', data)
             console.log(res.data)
+            console.log('after axios')
 
             await asyncStorage.setItem('token', res.data.token)
 

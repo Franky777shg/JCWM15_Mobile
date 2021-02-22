@@ -66,7 +66,8 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 50,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#28527a'
     },
     input: {
         marginVertical: 15

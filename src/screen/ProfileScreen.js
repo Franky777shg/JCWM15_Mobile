@@ -47,12 +47,13 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fbeeac',
         flex: 1,
-        padding: 20,
-        paddingTop: 30
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     title: {
         fontSize: 50,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#28527a'
     },
     buttonContainer: {
         display: 'flex',

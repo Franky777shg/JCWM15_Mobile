@@ -39,12 +39,14 @@ const LoginScreen = ({ navigation }) => {
             <Text style={styles.title}>Login</Text>
             <Input
                 placeholder="Username"
+                value={username}
                 leftIcon={{ type: 'font-awesome', name: 'user' }}
                 onChangeText={setUsername}
                 style={styles.input}
             />
             <Input
                 placeholder="Password"
+                value={password}
                 leftIcon={{ type: 'font-awesome', name: 'lock' }}
                 onChangeText={setPassword}
                 style={styles.input}
@@ -72,7 +74,8 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 50,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#28527a'
     },
     input: {
         marginVertical: 15
