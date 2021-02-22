@@ -34,7 +34,7 @@ const HomeNavigation = () => {
                 }
             })}
             tabBarOptions={{
-                activeTintColor: 'salmon',
+                activeTintColor: '#28527a',
                 inactiveTintColor: 'gray'
             }}>
             <Tab.Screen name="Product" component={ProductScreen} />

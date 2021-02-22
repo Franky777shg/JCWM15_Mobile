@@ -47,10 +47,12 @@ const RegisterScreen = ({ navigation }) => {
             <Button
                 title="Register"
                 onPress={handleRegister}
-            />
+                buttonStyle={styles.button}
+                />
             <Button
-                title="Login"
+                title="Back to Login"
                 onPress={() => navigation.navigate('Login')}
+                buttonStyle={styles.button}
             />
         </View>
     )
@@ -59,7 +61,7 @@ const RegisterScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         padding: 20,
-        // backgroundColor: 'salmon',
+        backgroundColor: '#fbeeac',
         flex: 1
     },
     title: {
@@ -68,6 +70,10 @@ const styles = StyleSheet.create({
     },
     input: {
         marginVertical: 15
+    },
+    button:{
+        marginVertical: 5,
+        backgroundColor: '#28527a'
     }
 })
 

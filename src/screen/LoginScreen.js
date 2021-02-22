@@ -50,11 +50,11 @@ const LoginScreen = ({ navigation }) => {
                 style={styles.input}
             />
             <Button
-                buttonStyle={{...styles.button, marginBottom: 10}}
+                buttonStyle={{...styles.button, marginBottom: 20}}
                 title="Login"
                 onPress={handleLogin}
             />
-            <Text>Sudah punya akun?</Text>
+            <Text>Don't have an account?</Text>
             <Button
                 buttonStyle={styles.button}
                 title="Register"
@@ -67,7 +67,7 @@ const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         padding: 20,
-        // backgroundColor: 'salmon',
+        backgroundColor: '#fbeeac',
         flex: 1
     },
     title: {
@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
         marginVertical: 15
     },
     button: {
-        marginVertical: 5
+        marginVertical: 5,
+        backgroundColor: '#28527a'
     }
 })
 

@@ -45,9 +45,10 @@ const ProfileScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        // backgroundColor: 'salmon',
+        backgroundColor: '#fbeeac',
         flex: 1,
-        padding: 20
+        padding: 20,
+        paddingTop: 30
     },
     title: {
         fontSize: 50,
@@ -60,6 +61,7 @@ const styles = StyleSheet.create({
     },
     button: {
         width: 200,
+        backgroundColor: '#28527a'
     }
 })
 
