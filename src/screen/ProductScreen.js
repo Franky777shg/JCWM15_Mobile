@@ -14,7 +14,7 @@ import ProductCard from '../components/ProductCard'
 
 const WIDTH = Dimensions.get('screen').width;
 
-const ProductScreen = () => {
+const ProductScreen = ({ navigation }) => {
     const dispatch = useDispatch()
 
     const { product, carousel, username } = useSelector((state) => {
@@ -39,7 +39,7 @@ const ProductScreen = () => {
                 <Carousel
                     data={carousel}
                     renderItem={({ item }) => (
-                        <TileComp data={item}/>
+                        <TileComp data={item} />
                     )}
                     sliderWidth={WIDTH}
                     itemWidth={WIDTH}
@@ -50,7 +50,7 @@ const ProductScreen = () => {
             <FlatList
                 data={product}
                 renderItem={({ item }) => (
-                    <ProductCard product={item} />
+                    <ProductCard product={item} onTouch={() => navigation.navigate('product-detail')} />
                 )}
                 keyExtractor={(item, index) => index.toString()}
                 numColumns={2}

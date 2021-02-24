@@ -4,10 +4,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5'
 
 // import screens
-import ProductScreen from '../screen/ProductScreen'
 import CartScreen from '../screen/CartScreen'
 import WalletScreen from '../screen/WalletScreen'
 import ProfileScreen from '../screen/ProfileScreen'
+
+// import navigation
+import ProductNavigation from './ProductNavigation'
 
 const HomeNavigation = () => {
     const Tab = createBottomTabNavigator()
@@ -37,7 +39,7 @@ const HomeNavigation = () => {
                 activeTintColor: '#28527a',
                 inactiveTintColor: 'gray'
             }}>
-            <Tab.Screen name="Product" component={ProductScreen} />
+            <Tab.Screen name="Product" component={ProductNavigation} />
             <Tab.Screen name="Cart" component={CartScreen} />
             <Tab.Screen name="Wallet" component={WalletScreen} />
             <Tab.Screen name="Profile" component={ProfileScreen} />

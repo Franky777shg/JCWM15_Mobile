@@ -1,12 +1,12 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
-import { Card } from 'react-native-elements'
+import { Card, Button } from 'react-native-elements'
 
 // import components
 import RatingComp from './RatingComp'
 import IconComp from './IconComp'
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, onTouch }) => {
     return (
         <Card containerStyle={styles.cardContainer}>
             <Card.Image
@@ -25,7 +25,7 @@ const ProductCard = ({ product }) => {
                     <View style={styles.viewButton}>
                         <Button
                             icon={
-                                <IconComp iconName='bookmark' />
+                                <IconComp iconName='bookmark' color="#28527a"/>
                             }
                             buttonStyle={styles.buttonBookmark}
                         />
@@ -34,6 +34,7 @@ const ProductCard = ({ product }) => {
                                 <IconComp iconName='shopping-cart' />
                             }
                             buttonStyle={styles.buttonCart}
+                            onPress={onTouch}
                         />
                     </View>
                 </View>
