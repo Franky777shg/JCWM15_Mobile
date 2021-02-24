@@ -1,9 +1,13 @@
 import React from 'react'
-import {View, Text} from 'react-native'
+import { View, Text, StatusBar } from 'react-native'
 
 const ProductDetail = () => {
-    return(
-        <View style={{flex: 1}}>
+    return (
+        <View style={{
+            flex: 1,
+            backgroundColor: 'salmon',
+        }}>
+            <Text>Apa</Text>
         </View>
     )
 }

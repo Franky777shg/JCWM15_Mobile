@@ -31,7 +31,9 @@ const MainNavigation = () => {
         <Stack.Navigator headerMode={false}>
             {id
                 ? (
-                    <Stack.Screen name="Home" component={HomeNavigation} />
+                    <>
+                        <Stack.Screen name="Home" component={HomeNavigation} />
+                    </>
                 )
                 : (
                     <>

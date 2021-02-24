@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { View, Text, Dimensions, FlatList, SafeAreaView } from 'react-native'
-import { Tile, Card, Button, Rating } from 'react-native-elements'
+import { Header } from 'react-native-elements'
 import Carousel from 'react-native-snap-carousel'
 
 // import actions
@@ -31,10 +31,10 @@ const ProductScreen = ({ navigation }) => {
     }, [])
 
     return (
-        <SafeAreaView style={{ backgroundColor: '#fbeeac', flex: 1 }}>
-            <HeaderComp
+        <SafeAreaView style={{ backgroundColor: '#fbeeac', flex: 1, paddingTop: 10 }}>
+            {/* <HeaderComp
                 username={username}
-            />
+            /> */}
             <View>
                 <Carousel
                     data={carousel}
