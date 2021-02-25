@@ -9,6 +9,9 @@ import { CommonActions } from '@react-navigation/native'
 // import actions
 import { logout } from '../actions'
 
+// import style
+import styles from '../style/profileStyle'
+
 const ProfileScreen = ({ navigation }) => {
     const dispatch = useDispatch()
 
@@ -42,28 +45,5 @@ const ProfileScreen = ({ navigation }) => {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#fbeeac',
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    title: {
-        fontSize: 50,
-        fontWeight: 'bold',
-        color: '#28527a'
-    },
-    buttonContainer: {
-        display: 'flex',
-        alignItems: 'center',
-        marginTop: 20
-    },
-    button: {
-        width: 200,
-        backgroundColor: '#28527a'
-    }
-})
 
 export default ProfileScreen

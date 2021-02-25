@@ -25,7 +25,7 @@ const ProductNavigation = () => {
                 component={ProductScreen}
                 options={{
                     headerStyle: {
-                        backgroundColor: '#28527a'
+                        backgroundColor: '#28527a',
                     },
                     headerTitleStyle: {
                         color: '#ffffff'
@@ -38,9 +38,24 @@ const ProductNavigation = () => {
                         marginRight: 15
                     }
                 }}
-
             />
-            <Stack.Screen name="product-detail" component={ProductDetail} />
+            <Stack.Screen
+                name="Product Detail"
+                component={ProductDetail}
+                options={{
+                    headerStyle: {
+                        backgroundColor: '#28527a',
+                    },
+                    headerTintColor: '#ffffff',
+                    headerTitleAlign: "center",
+                    headerRight: () => (
+                        <AvatarComp username={username} />
+                    ),
+                    headerRightContainerStyle: {
+                        marginRight: 15
+                    }
+                }}
+            />
         </Stack.Navigator>
     )
 }
