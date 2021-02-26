@@ -1,8 +1,9 @@
 import React from 'react'
 import { ScrollView, View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
-import { Button, Card, Icon } from 'react-native-elements'
+import { Button, Card, Icon, Input, Overlay } from 'react-native-elements'
 import Carousel from 'react-native-snap-carousel'
 import Modal from 'react-native-modal';
+import { useSelector } from 'react-redux';
 
 // import components
 import Rating from '../components/RatingComp'
@@ -37,10 +38,17 @@ const SIZE = [39, 40, 41, 42, 43]
 const ProductDetail = ({ route }) => {
     const { product } = route.params
 
-    const [visible, setVisible] = React.useState(true)
+    const [visible, setVisible] = React.useState(false)
+    const [error, setError] = React.useState(false)
     const [color, setColor] = React.useState('')
     const [size, setSize] = React.useState(null)
     const [qty, setQty] = React.useState(0)
+
+    const { id } = useSelector((state) => {
+        return {
+            id: state.userReducer.id
+        }
+    })
 
     const RenderColor = () => {
         return (
@@ -150,6 +158,28 @@ const ProductDetail = ({ route }) => {
         )
     }
 
+    const handleMinus = () => {
+        if (qty === 0 || qty === '0') return
+        setQty(prev => prev - 1)
+    }
+
+    const handlePlus = () => {
+        setQty(prev => parseInt(prev) + 1)
+    }
+
+    const handleConfirm = () => {
+        if (qty === 0 || !color || !size) return setError(true)
+        const sendToCart = {
+            order_number: Date.now(),
+            id_user: id,
+            id_product: product.id,
+            color,
+            size,
+            qty,
+            total: qty * product.harga
+        }
+    }
+
     return (
         <ScrollView style={styles.container}>
             <Text style={styles.title}>{product.nama}</Text>
@@ -185,7 +215,7 @@ const ProductDetail = ({ route }) => {
                 isVisible={visible}
                 backdropOpacity={0.1}
                 onBackdropPress={() => setVisible(false)}
-            // style={{ maxHeight: 250, marginTop: 400 }}
+                style={{ maxHeight: 350, marginTop: 300 }}
             >
                 <View style={{ flex: 1, backgroundColor: '#ffffff', padding: 5, display: 'flex', alignItems: 'center' }}>
                     <Text style={{ fontSize: 17 }}>Choose Color:</Text>
@@ -216,8 +246,8 @@ const ProductDetail = ({ route }) => {
                     <View style={{
                         display: 'flex',
                         flexDirection: 'row',
-                        // backgroundColor: 'salmon',
-                        width: 200,
+                        // backgroundColor: 'lightgreen',
+                        width: 220,
                         height: 70,
                         padding: 5,
                         alignItems: 'center',
@@ -225,21 +255,39 @@ const ProductDetail = ({ route }) => {
                     }}>
                         <Icon
                             raised
+                            reverse
                             name='minus'
                             type='font-awesome'
                             color='#28527a'
-                            onPress={() => console.log('hello')} />
-                        <Text style={{fontSize: 25}}>{qty}</Text>
+                            onPress={handleMinus}
+                        />
+                        <Input
+                            containerStyle={{ width: 70 }}
+                            onChangeText={setQty}
+                            inputStyle={{ textAlign: 'center' }}
+                        >
+                            {qty}
+                        </Input>
                         <Icon
                             raised
+                            reverse
                             name='plus'
                             type='font-awesome'
                             color='#28527a'
-                            onPress={() => console.log('hello')} />
+                            onPress={handlePlus}
+                        />
                     </View>
-                    <Button title="Hide modal" onPress={() => setVisible(false)} />
+                    <Button
+                        title="Confirm"
+                        onPress={handleConfirm}
+                        buttonStyle={{ width: 150, marginVertical: 10, backgroundColor: '#28527a' }}
+                    />
                 </View>
             </Modal>
+            <Overlay isVisible={error} onBackdropPress={() => setError(false)}>
+                <Text style={{fontSize: 30}}>Error: </Text>
+                <Text style={{fontSize: 20}}>Make sure your confirm is right</Text>
+            </Overlay>
         </ScrollView>
     )
 }
